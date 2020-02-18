@@ -25,12 +25,18 @@ SECRET_KEY = 'n!%3s=a*b#_8(r%&$8bw6f6nf)c@7i)w^2+7dqso%70i9_mrx#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+        "localhost",
+        "127.0.0.1",
+        "[::1]",
+        "testserver",
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'users',
     'posts',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -104,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
@@ -122,3 +128,8 @@ STATIC_URL = '/static/'
 
 # задаём адрес директории, куда командой *collectstatic* будет собрана вся статика
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+#  подключаем движок filebased.EmailBackend
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+# указываем директорию, в которую будут складываться файлы писем
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
