@@ -14,4 +14,6 @@ urlpatterns = [
 
         # раздел администратора
         path("admin/", admin.site.urls),
+
+
 ]
