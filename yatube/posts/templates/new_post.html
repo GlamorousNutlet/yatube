@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 {% block title %}Новый пост{% endblock %}
 {% block content %}
-
 <form method="post" action="{% url 'new_post' %}">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Добавить">
+    <button type="submit" class="btn-primary float-left">
+        {% if post != None %}
+            First
+        {% else %}
+            Second
+        {% endif %}
+    </button>
 </form>
 {% endblock %}

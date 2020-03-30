@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "django.contrib.sites",
+    "django.contrib.flatpages",
 ]
 
 MIDDLEWARE = [
@@ -133,3 +135,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 # указываем директорию, в которую будут складываться файлы писе
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+# Идентификатор текущего сайта
+SITE_ID = 1
