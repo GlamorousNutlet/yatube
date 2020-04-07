@@ -1,6 +1,6 @@
 from django.contrib import admin
 # из файла models импортируем модель Post
-from .models import Post, Group
+from .models import Post, Group, Comment
 
 class PostAdmin(admin.ModelAdmin):
     list_display = ("pk","text", "pub_date", "author") # перечислили поля, которые должны отображаться в админке
@@ -10,3 +10,4 @@ class PostAdmin(admin.ModelAdmin):
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(Group)
+admin.site.register(Comment)
