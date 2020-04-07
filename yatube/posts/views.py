@@ -82,7 +82,6 @@ def post_edit(request, username, post_id):
 def add_comment(request, post_id, username):
     post = get_object_or_404(Post, id=post_id)
     form = CommentForm(request.POST)
-    items = Comment.objects.filter(post_id=post_id)
     if request.method == 'POST':
         if form.is_valid():
             comment = form.save(commit=False)
