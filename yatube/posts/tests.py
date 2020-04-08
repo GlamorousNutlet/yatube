@@ -1,5 +1,23 @@
-from django.test import TestCase, Client
+from django.test import TestCase, Client, override_settings
 from . models import User, Post
+from yatube import settings
+import time
+
+
+class Cash_test(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.username = User.objects.create_user(username="TommyCash")
+        self.client.force_login(self.username)
+        self.client.get('/')                                             # Делаем запрос к главной, чтобы запустить таймер
+
+    def test_using_cache(self):
+        self.client.post('/new/', {'text': 'Guess whos back?'})          # Создаем пост
+        response_before = self.client.get('/')                           # Получаем главную
+        self.assertNotContains(response_before, 'Guess whos back?')      # Проверяем, отобразился ли наш пост раньше времени
+        time.sleep(20)                                                   # Ждем, пока в кэш попадет новая страница
+        response_after = self.client.get('/')                            # Еще раз запрашиваем
+        self.assertContains(response_after, 'Guess whos back?')          # Смотрим, есть ли пост
 
 class ProfileTest(TestCase):
     def setUp(self):
@@ -24,6 +42,7 @@ class ProfileTest(TestCase):
         response = self.client.post("/new/", {"text": 'Mamba #5'})
         self.assertRedirects(response, '/auth/login/?next=/new/')                         # Проверяем, есть ли редирект на страницу авторизации
 
+    @override_settings(CACHES=settings.TEST_CACHES)
     def test_post_search(self):
         post_text = 'Another post'
         self.client.force_login(self.username)
@@ -36,6 +55,7 @@ class ProfileTest(TestCase):
         response = self.client.get(f'/{self.username}/{post.pk}/')
         self.assertContains(response, post_text)                                          # Ищем пост на странице поста
 
+    @override_settings(CACHES=settings.TEST_CACHES)
     def test_post_edit(self):
         post_text = 'Is this love that Im feeling; Is this the love that Ive been searching for; Is this love or am I dreaming; This must be love: Cause its really got a hold on me; A hold on me'
         self.client.force_login(self.username)
@@ -81,6 +101,9 @@ class img_tests(TestCase):
         post = Post.objects.last()
         #Проверяем, что последний(и единственный из возможных) пост пуст
         self.assertEqual(post, None)
+
+
+
 
 
 

@@ -146,3 +146,15 @@ SITE_ID = 1
 LOGIN_URL = "/auth/login/"
 LOGIN_REDIRECT_URL = "index"
 LOGOUT_REDIRECT_URL = "index"
+
+CACHES = {
+        'default': {
+                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+                'LOCATION': 'unique-snowflake',
+        }
+}
+TEST_CACHES = {
+     'default': {
+         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+     }
+}

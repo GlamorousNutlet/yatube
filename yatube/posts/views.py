@@ -4,6 +4,7 @@ from .forms import PostForm, CommentForm
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import cache_page
 
 
 def page_not_found(request, exception):
@@ -14,6 +15,7 @@ def page_not_found(request, exception):
 def server_error(request):
     return render(request, "misc/500.html", status=500)
 
+# @cache_page(20)
 def index(request):
     post_list = Post.objects.order_by("-pub_date").all()
     paginator = Paginator(post_list, 10)  # показывать по 10 записей на странице.
