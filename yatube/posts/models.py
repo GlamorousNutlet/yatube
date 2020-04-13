@@ -8,6 +8,9 @@ class Group(models.Model):
     slug = models.SlugField(unique=True)
     description = models.TextField() # описание
 
+    def __str__(self):
+        return self.title
+
 class Post(models.Model):
     text = models.TextField()
     pub_date = models.DateTimeField("date published", auto_now_add=True, db_index = True)

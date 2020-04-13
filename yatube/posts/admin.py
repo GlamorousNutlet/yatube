@@ -8,7 +8,11 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ("pub_date",) # добавляем возможность ФИЛЬТРОВАТЬ по дате
     empty_value_display = '-пусто-' # свойство, которое запишет в любое колонку пусто, если там пустота
 
+class GroupAdmin(admin.ModelAdmin):
+    list_display = ("pk","title", "slug", "description") # перечислили поля, которые должны отображаться в админке
+    empty_value_display = '-пусто-' # свойство, которое запишет в любое колонку пусто, если там пустота
+
 admin.site.register(Post, PostAdmin)
-admin.site.register(Group)
+admin.site.register(Group, GroupAdmin)
 admin.site.register(Comment)
 admin.site.register(Follow)
