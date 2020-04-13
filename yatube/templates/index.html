@@ -5,20 +5,19 @@
 {% block content %}
 
     <div class="container">
-        {% cache 20 index_page %}
+        {% include "menu.html" with index=True %}
+        {% cache 20 index_page page %}
            <h1> Последние обновления на сайте</h1>
-            <!-- Вывод ленты записей -->
-
                     {% for post in page %}
                         {% include "post_item.html" with post=post %}
                     {% endfor %}
 
         {% endcache %}
-    </div>
 
         <!-- Вывод паджинатора -->
         {% if page.has_other_pages %}
             {% include "paginator.html" with items=page paginator=paginator%}
         {% endif %}
+    </div>
 
 {% endblock %}
